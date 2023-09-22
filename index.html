@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Account in Salesforce</title>
+    
+    <style>
+        /* Style your form */
+        form {
+            width: 300px;
+            margin: 0 auto;
+        }
+    </style>
+</head>
+<body>
+    <form id="accountForm">
+        <input type="text" id="accountName" placeholder="Enter Account Name">
+        <button type="submit">Create Account</button>
+    </form>
+
+    <script>
+        document.getElementById('accountForm').addEventListener('submit', async function(event) {
+            event.preventDefault();
+            const accountName = document.getElementById('accountName').value;
+            
+            try {
+                const response = await fetch('http://localhost:8080/createAccount', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ accountName: accountName })
+                });
+
+                const data = await response.json();
+                if (data.success) {
+                    alert('Account created successfully!');
+                }
+            } catch (error) {
+                alert('Failed to create account.');
+            }
+        });
+    </script>
+</body>
+</html>
